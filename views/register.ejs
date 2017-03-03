@@ -14,6 +14,7 @@
         };
           console.log(JSON.stringify(info));
         $.post('/register', info, function(){
+          window.location.replace('/done/'+$('#user').val());
           console.log("Success!!");
         });
       });

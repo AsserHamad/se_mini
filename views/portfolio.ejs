@@ -4,11 +4,32 @@
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script>
     $('document').ready(function(){
+
+
+      //Setting up your stuff (if it exists ;) )
+      $.get('/done/porto/'+username,function(data){
+        if(data!=null){
+          $.get('/links/+username',function(data){
+            if(data!=null){
+
+            }else console.log("no links :(");
+          });
+          $.get('/screenshots/+username',function(data){
+            if(data!=null){
+
+            }else console.log("no screenshots :(");
+          });
+        }else console.log("No portfolio son");
+      });
+
+
+
       $("#port").hide();
       $("#add").hide();
+
       var username = $(location). attr("href").split('/')[$(location). attr("href").split('/').length-1];
       console.log(username);
-      $('#ababa').text("Welcome back, "+username);
+      $('#ababa').text("Welcome , "+username);
       $('#butt').on('click',function(){
         $.get('/done/porto/'+username,function(data){
           if(data!=null)alert('You already have a portfolio!');
@@ -34,6 +55,7 @@
 </head>
 <body>
   <h1 id="ababa">aka</h1>
+  <img src="" id="image"/>
   <button id="butt">Create portfolio</button><button id="butt2">Add item to portfolio</button>
   <div id="add">
     Screenshot <input id="scr" type="file" name="sc"  accept="image/*" /><br />
@@ -41,9 +63,12 @@
     <button id="add_item">Submit</button>
   </div>
   <div id="port">
-    Full Name <input id="name" type="text" /><br />
-    Add link to Portfolio <input id="linkz" type="text" /><br />
-    <button id="create_port" >Submit</button>
+    <form method="POST" enctype="multipart/form-data" action="/upload">
+      Full Name <input id="name" type="text" /><br />
+      Add link to Portfolio <input id="linkz" type="text" /><br />
+      or Add a screenshot <input id="screenshot" type="file" name="myimage" /><br />
+      <input type="submit"  />
+    </form>
   </div>
 </body>
 </html>

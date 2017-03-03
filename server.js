@@ -6,6 +6,17 @@ var mongoose=require('mongoose');
 var path = require('path');
 var fs = require('fs');
 var s_info = mongojs('s_info',['s_info','s_portfolio','s_links']);
+var multer = require('multer');
+var upload=multer({dest:'uploads/'});
+
+app.post('/upload',upload.any(),function(req,res){
+  console.log(JSON.stringify(req.body)+"   "+JSON.stringify(req.files));
+  //res.send(req.files);
+});
+
+app.get('/links/:username',function(req,res){
+  res.json(s_info.s_links.find({username : req.params.username}));
+});
 
 app.post('/link',function(req,res){
   s_info.s_links.insert(req.body,function(err,doc){
