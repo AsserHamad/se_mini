@@ -1,0 +1,31 @@
+<html>
+<head>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <title>Register</title>
+  <script>
+    $('document').ready(function(){
+      $('#butt').on('click',function(e){
+        var info = {
+          username : $('#user').val(),
+          password : $('#pass').val(),
+          email : $('#email').val(),
+          ID : $('#gucid').val(),
+          major : $('input[name=major]').val()
+        };
+          console.log(JSON.stringify(info));
+        $.post('/register', info, function(){
+          console.log("Success!!");
+        });
+      });
+    });
+  </script>
+</head>
+<body>
+    Username  <input id="user" type="text" /><br />
+    Password  <input id="pass" type="password" /><br />
+    Email     <input id="email" type="text" /><br />
+    GUC ID    <input id="gucid" type="text" /><br />
+    Major     MET <input type="radio" name="major" value="MET" />  BI <input type="radio" name="major" value="BI" /><br />
+    <button id="butt">Submit</button>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<html>
+<head>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script>
+    $('document').ready(function(){
+      $('#_user').hide();
+      $('#_pass').hide();
+      $('#butt').on('click',function(){
+        var info={
+          username : $('#username').val(),
+          password : $('#password').val()
+        }
+        $.post('/login',info,function(data){
+          if(data != null){
+            if(data.password==$('#password').val()){
+              window.location.replace('/done/'+data.username);
+            //  $.get();
+            }else{
+              $('#_pass').val("*Incorrect password");
+              $('#_pass').show();
+              $('#_user').hide();
+            }
+          }else {
+            $('#_user').val("*Username does not exist");
+            $('#_user').show();
+            $('#_pass').hide();
+          }
+          console.log(JSON.stringify(data));
+        });
+      });
+    });
+  </script>
+  <title>Login</title>
+</head>
+<body>
+  <p id="_user">
+    *Username does not exist<br />
+  </p>
+  Username  <input type="text" id="username" /><br />
+  <p id="_pass">
+    *Incorrect Password<br />
+  </p>
+  Password  <input type="text" id="password" /><br />
+  <button id="butt">Submit</button>
+</body>
+</html>

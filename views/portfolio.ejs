@@ -1,0 +1,49 @@
+<html>
+<head>
+  <title id="_title">You did it!</title>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script>
+    $('document').ready(function(){
+      $("#port").hide();
+      $("#add").hide();
+      var username = $(location). attr("href").split('/')[$(location). attr("href").split('/').length-1];
+      console.log(username);
+      $('#ababa').text("Welcome back, "+username);
+      $('#butt').on('click',function(){
+        $.get('/done/porto/'+username,function(data){
+          if(data!=null)alert('You already have a portfolio!');
+          else{
+            $("#port").show();
+          }
+        });
+      });
+      $("#create_port").on("click",function(){
+        if($("#link").val()=="" && $("#screenshot").val()=="")console.log("Please sir don't make this difficult");
+        else console.log("Yayyy /(^0^)/");
+      });
+      $("#butt2").on("click",function(){
+        $("#port").show();
+      });
+      $("#add_item").on("click",function(){
+        console.log("Submitted yo shit homie");
+      });
+    });
+  </script>
+</head>
+<body>
+  <h1 id="ababa">aka</h1>
+  <button id="butt">Create portfolio</button><button id="butt2">Add item to portfolio</button>
+  <div id="add">
+    Screenshot <input id="scr" type="file" name="sc"  accept="image/*" /><br />
+    Link <input id="link" type="text"  /><br />
+    <button id="add_item">Submit</button>
+  </div>
+  <div id="port">
+    Full Name <input id="name" type="text" /><br />
+    Profile Picture <input type="file" id="pp" name="pp"  accept="image/*"  />
+    *Add Screenshot of work <input id="screenshot" type="file" name="sc"  accept="image/*" />
+    or Add link to work <input id="link" type="text"  /><br />
+    <button id="create_port" >Submit</button>
+  </div>
+</body>
+</html>
