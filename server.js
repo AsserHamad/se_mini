@@ -5,8 +5,13 @@ var mongojs=require('mongojs');
 var mongoose=require('mongoose');
 var path = require('path');
 var fs = require('fs');
-var s_info = mongojs('s_info',['s_info','s_portfolio']);
+var s_info = mongojs('s_info',['s_info','s_portfolio','s_links']);
 
+app.post('/link',function(req,res){
+  s_info.s_links.insert(req.body,function(err,doc){
+    res.json(doc);
+  });
+});
 //app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -34,7 +39,6 @@ app.post('/login',function(req,res){
     res.json(doc);
   });
 });
-
 
 app.get('/done/:username',function(req,res){
   console.log("hey bro I'm redirecting you now dw");

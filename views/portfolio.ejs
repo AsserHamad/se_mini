@@ -18,8 +18,10 @@
         });
       });
       $("#create_port").on("click",function(){
-        if($("#link").val()=="" && $("#screenshot").val()=="")console.log("Please sir don't make this difficult");
-        else console.log("Yayyy /(^0^)/");
+        if($("#linkz").val()=="")console.log("Please sir don't make this difficult "+$("#linkz").val()+$("#name").val());
+        else $.post('/link',{username : username,link : $("#linkz").val(), fullname : $("#name").val()},function(data){
+          console.log();
+        });
       });
       $("#butt2").on("click",function(){
         $("#port").show();
@@ -40,9 +42,7 @@
   </div>
   <div id="port">
     Full Name <input id="name" type="text" /><br />
-    Profile Picture <input type="file" id="pp" name="pp"  accept="image/*"  />
-    *Add Screenshot of work <input id="screenshot" type="file" name="sc"  accept="image/*" />
-    or Add link to work <input id="link" type="text"  /><br />
+    Add link to Portfolio <input id="linkz" type="text" /><br />
     <button id="create_port" >Submit</button>
   </div>
 </body>
