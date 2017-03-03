@@ -6,6 +6,7 @@
     $('document').ready(function(){
 
 
+
       //Setting up your stuff (if it exists ;) )
       $.get('/done/porto/'+username,function(data){
         if(data!=null){
@@ -16,20 +17,34 @@
           });
           $.get('/screenshots/+username',function(data){
             if(data!=null){
-
+              $.get('/screenshots/'+username,function(data){
+                console.log(JSON.stringify(data));
+              });
             }else console.log("no screenshots :(");
           });
         }else console.log("No portfolio son");
       });
 
 
-
+      //Hiding all unneeded pesky divs
       $("#port").hide();
       $("#add").hide();
+      $("#enter").hide();
+      $("#add_screenshot").hide();
+      $("#add_link").hide();
 
+
+      //Getting the username
       var username = $(location). attr("href").split('/')[$(location). attr("href").split('/').length-1];
       console.log(username);
       $('#ababa').text("Welcome , "+username);
+
+
+      //Something special
+      $("#add_screenshot").attr("action","/upload/"+username);
+
+
+      //Creating a new portfolio option
       $('#butt').on('click',function(){
         $.get('/done/porto/'+username,function(data){
           if(data!=null)alert('You already have a portfolio!');
@@ -38,37 +53,59 @@
           }
         });
       });
-      $("#create_port").on("click",function(){
-        if($("#linkz").val()=="")console.log("Please sir don't make this difficult "+$("#linkz").val()+$("#name").val());
-        else $.post('/link',{username : username,link : $("#linkz").val(), fullname : $("#name").val()},function(data){
-          console.log();
-        });
+
+      //Showing divs
+      $("#b_add_screenshot").on("click",function(){
+        $("#add_link").hide(),$("#add_screenshot").show();
+        $.post('/damn',{name : $("#name").val(), username : username});
       });
-      $("#butt2").on("click",function(){
-        $("#port").show();
+      $("#b_add_link").on("click",function(){
+        $("#add_screenshot").hide();$("#add_link").show()
+        //$.post('/damn',{name : $("#name").val(), username : username});
       });
-      $("#add_item").on("click",function(){
-        console.log("Submitted yo shit homie");
+
+      $("#butt2").on("click",function(){$("#port").show();});
+
+      //submissions
+      $("#submit_link").on("click",function(){
+        $.post("/link",{link : $("#zelda").val(), username : username});
       });
+
     });
   </script>
 </head>
 <body>
-  <h1 id="ababa">aka</h1>
-  <img src="" id="image"/>
+  <h1 id="ababa">Welcome</h1>
+
+  <div>
+    <div id="screens">
+
+    </div>
+
+
+  </div>
+
   <button id="butt">Create portfolio</button><button id="butt2">Add item to portfolio</button>
+
   <div id="add">
     Screenshot <input id="scr" type="file" name="sc"  accept="image/*" /><br />
     Link <input id="link" type="text"  /><br />
     <button id="add_item">Submit</button>
   </div>
+
   <div id="port">
-    <form method="POST" enctype="multipart/form-data" action="/upload">
-      Full Name <input id="name" type="text" /><br />
-      Add link to Portfolio <input id="linkz" type="text" /><br />
-      or Add a screenshot <input id="screenshot" type="file" name="myimage" /><br />
-      <input type="submit"  />
+    Full Name <input id="name" type="text" /><br />
+    <button id="b_add_screenshot">Add Screenshot</button><button id="b_add_link">Add Link</button>
+
+    <form id="add_screenshot" method="POST" enctype="multipart/form-data" action="/upload"><input id="screenshot" type="file" name="myimage" /><br />
+      <input type="submit" />
     </form>
+
+    <div id="add_link">
+      <input type="text" id="zelda" />
+      <button id="submit_link">Submit Link</button>
+    </div>
+
   </div>
 </body>
 </html>
